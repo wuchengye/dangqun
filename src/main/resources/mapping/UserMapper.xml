@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dangqun.mapper.UserMapper">
+    <select id="selectOneByName" resultType="com.dangqun.entity.UserEntity">
+        select * from user_table where user_name = #{userName}
+    </select>
+
+    <insert id="insertUser" parameterType="com.dangqun.entity.UserEntity">
+        insert into user_table (user_name,user_pwd,user_auth,user_branch,user_creator)
+                    values (#{userName},#{userPwd},#{userAuth},#{userBranch},#{userCreator})
+    </insert>
+
+    <update id="updateUser" parameterType="com.dangqun.vo.UpdateUserMethodBody">
+        update user_table set user_branch = #{userBranch},user_auth = #{userAuth} where user_id = #{userId}
+    </update>
+
+    <update id="modifyPwd">
+        update user_table set user_pwd = #{userPwd} where user_id = #{userId}
+    </update>
+
+    <delete id="deleteUser">
+        delete from user_table where user_id = #{userId}
+    </delete>
+</mapper>

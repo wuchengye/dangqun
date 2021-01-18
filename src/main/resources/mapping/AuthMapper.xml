@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dangqun.mapper.AuthMapper">
+    <select id="selectOneById" resultType="com.dangqun.entity.AuthEntity">
+        select * from auth_table where auth_id = #{userAuth}
+    </select>
+
+    <insert id="insertAuth" parameterType="com.dangqun.entity.AuthEntity">
+        insert into auth_table (auth_name,auth_level,auth_branch,auth_branch_path,auth_default)
+        values (#{authName},#{authLevel},#{authBranch},#{authBranchPath},#{authDefault})
+    </insert>
+
+    <update id="updateAuth" parameterType="com.dangqun.entity.AuthEntity">
+        update auth_table set auth_name = #{authName},auth_branch = #{authBranch},auth_branch_path = #{authBranchPath}
+        where auth_id = #{authId}
+    </update>
+
+    <delete id="deleteAuthById">
+        delete from auth_table where auth_id = #{authId}
+    </delete>
+
+    <select id="selectAllAuth" resultType="com.dangqun.entity.AuthEntity">
+        select * from auth_table
+    </select>
+</mapper>
