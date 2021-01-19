@@ -19,6 +19,10 @@ public class AuthService {
         return authMapper.selectOneById(userAuth);
     }
 
+    public AuthEntity selectOneByName(String authName){
+        return authMapper.selectOneByName(authName);
+    }
+
     public int insertAuth(AuthEntity authEntity) {
         return authMapper.insertAuth(authEntity);
     }

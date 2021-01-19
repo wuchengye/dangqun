@@ -28,7 +28,11 @@ public class AuthController {
     @PostMapping("/addAuth")
     @CheckIsManager
     public Result addAuth(@RequestBody @Valid AddAuthMethodBody body){
-        AuthEntity authEntity = new AuthEntity();
+        AuthEntity authEntity = authService.selectOneByName(body.getAuthName());
+        if (authEntity != null){
+            return Result.failure("权限名重复");
+        }
+        authEntity = new AuthEntity();
         authEntity.setAuthName(body.getAuthName());
         authEntity.setAuthBranch(body.getAuthBranch());
         authEntity.setAuthBranchPath(body.getAuthBranchPath());
@@ -47,6 +51,12 @@ public class AuthController {
         AuthEntity authEntity = authService.selectOneById(body.getAuthId());
         if(authEntity == null || authEntity.getAuthDefault() == Constants.AUTH_DEFAULT){
             return Result.failure("没有该权限或不允许修改");
+        }
+        if(!authEntity.getAuthName().equals(body.getAuthName())){
+            AuthEntity selectByName = authService.selectOneByName(body.getAuthName());
+            if(selectByName != null){
+                return Result.failure("权限名重复");
+            }
         }
         authEntity.setAuthName(body.getAuthName());
         authEntity.setAuthBranch(body.getAuthBranch());

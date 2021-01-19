@@ -1,15 +1,12 @@
 package com.dangqun.controller;
 
-import com.auth0.jwt.JWT;
 import com.dangqun.annotation.CheckIsManager;
 import com.dangqun.config.impl.ValidList;
 import com.dangqun.constant.Constants;
 import com.dangqun.entity.AuthEntity;
 import com.dangqun.entity.UserEntity;
-import com.dangqun.vo.AddUserMethodBody;
-import com.dangqun.vo.LoginMethodBody;
-import com.dangqun.vo.UpdateUserMethodBody;
-import com.dangqun.vo.UserModifyPwdBody;
+import com.dangqun.service.common.RedisService;
+import com.dangqun.vo.*;
 import com.dangqun.vo.restful.Result;
 import com.dangqun.service.AuthService;
 import com.dangqun.service.UserService;
@@ -18,9 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,6 +30,8 @@ public class UserController {
     private UserService userService;
     @Autowired
     private AuthService authService;
+    @Autowired
+    private RedisService redisService;
 
     @PostMapping("/login")
     public Result login(@RequestBody @Valid LoginMethodBody body){
@@ -50,6 +46,7 @@ public class UserController {
         if(authEntity == null){
             return Result.failure("用户无权限");
         }
+        redisService.setUserData(userEntity);
         Map<String,Object> map = new HashMap(3);
         map.put("userName",userEntity.getUserName());
         map.put("userAuthLevel",authEntity.getAuthLevel());
@@ -59,11 +56,7 @@ public class UserController {
 
     @PostMapping("/userModifyPwd")
     public Result userModifyPwd(@RequestBody @Valid UserModifyPwdBody body){
-        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request = requestAttributes.getRequest();
-        String token = request.getHeader("token");
-        String userName = JWT.decode(token).getAudience().get(0);
-        UserEntity userEntity = userService.selectOneByName(userName);
+        UserEntity userEntity = redisService.getUserData();
         if(userEntity == null || userEntity.getUserPwd().equals(body.getUserOldPwd())){
             return Result.failure("密码错误");
         }
@@ -83,10 +76,7 @@ public class UserController {
         userEntity.setUserAuth(body.getUserAuth());
         userEntity.setUserBranch(body.getUserBranch());
         userEntity.setUserPwd(Constants.USER_DEFAULT_PASSWORD);
-        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request = requestAttributes.getRequest();
-        String token = request.getHeader("token");
-        UserEntity creator = userService.selectOneByName(JWT.decode(token).getAudience().get(0));
+        UserEntity creator = redisService.getUserData();
         if(creator != null){
             userEntity.setUserCreator(creator.getUserId());
         }
@@ -109,20 +99,20 @@ public class UserController {
 
     @PostMapping("/resetPwd")
     @CheckIsManager
-    public Result resetPwd(@RequestBody @Valid ValidList<Integer> userIdList) {
+    public Result resetPwd(@RequestBody @Valid ValidList<IdBody> userIdList) {
         int successTotal = 0;
-        for (int id : userIdList) {
-            successTotal = successTotal + userService.modifyPwd(id, Constants.USER_DEFAULT_PASSWORD);
+        for (IdBody body : userIdList) {
+            successTotal = successTotal + userService.modifyPwd(body.getId(), Constants.USER_DEFAULT_PASSWORD);
         }
         return successTotal == 0 ? Result.failure() : Result.success("成功:" + successTotal);
     }
 
     @PostMapping("/deleteUser")
     @CheckIsManager
-    public Result deleteUser(@RequestBody @Valid ValidList<Integer> userIdList) {
+    public Result deleteUser(@RequestBody @Valid ValidList<IdBody> userIdList) {
         int successTotal = 0;
-        for (int id : userIdList){
-            successTotal = successTotal + userService.deleteUser(id);
+        for (IdBody body : userIdList){
+            successTotal = successTotal + userService.deleteUser(body.getId());
         }
         return successTotal == 0 ? Result.failure() : Result.success("成功:" + successTotal);
     }

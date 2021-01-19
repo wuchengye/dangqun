@@ -20,4 +20,6 @@ public interface AuthMapper {
     int deleteAuthById(int authId);
 
     List<AuthEntity> selectAllAuth();
+
+    AuthEntity selectOneByName(String authName);
 }
