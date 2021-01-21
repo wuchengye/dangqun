@@ -60,6 +60,13 @@ public class TrackController {
             }
         }else {
             TrackEntity parentEntity = trackService.selectOneById(body.getTrackParentId());
+            if(parentEntity == null || parentEntity.getTrackBranch() != body.getBranchId()){
+                return Result.failure("父路径ID错误或支部信息不匹配");
+            }
+            if(parentEntity.getTrackStatus() == Constants.TRACK_STATUS_SAVE_FILE){
+                return Result.failure("父路径下不允许创建路径");
+            }
+            trackService.insertTrackAndUpdateOthers(parentEntity,newTrack);
         }
     }
 }

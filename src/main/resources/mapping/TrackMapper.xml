@@ -13,4 +13,8 @@
     <select id="selectAllByBranch" resultType="com.dangqun.entity.TrackEntity">
         select * from inner_track_table where track_branch = #{trackBranch}
     </select>
+
+    <select id="selectOneById" resultType="com.dangqun.entity.TrackEntity">
+        select * from inner_track_table where track_id = #{trackId}
+    </select>
 </mapper>

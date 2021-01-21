@@ -16,4 +16,6 @@ public interface TrackMapper {
     int insertTrackReturnId(TrackEntity trackEntity);
 
     int updateTrack(TrackEntity trackEntity);
+
+    TrackEntity selectOneById(Integer trackId);
 }

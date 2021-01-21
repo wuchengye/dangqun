@@ -4,6 +4,7 @@ import com.dangqun.entity.TrackEntity;
 import com.dangqun.mapper.TrackMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -35,5 +36,16 @@ public class TrackService {
             }
         }
         return maxRight;
+    }
+
+    public TrackEntity selectOneById(Integer trackId) {
+        return trackMapper.selectOneById(trackId);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public TrackEntity insertTrackAndUpdateOthers(TrackEntity parentTrack, TrackEntity newTrack) {
+        newTrack.setTrackLeftValue(parentTrack.getTrackRightValue());
+        newTrack.setTrackRightValue(parentTrack.getTrackRightValue() + 1);
+
     }
 }
