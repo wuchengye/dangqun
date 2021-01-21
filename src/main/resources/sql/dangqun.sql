@@ -11,7 +11,7 @@
  Target Server Version : 50718
  File Encoding         : 65001
 
- Date: 19/01/2021 18:59:52
+ Date: 21/01/2021 19:43:40
 */
 
 SET NAMES utf8mb4;
@@ -32,6 +32,12 @@ CREATE TABLE `auth_table`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Records of auth_table
+-- ----------------------------
+INSERT INTO `auth_table` VALUES (1, '管理员', 0, NULL, NULL, 1);
+INSERT INTO `auth_table` VALUES (2, '普通用户', 1, NULL, NULL, 1);
+
+-- ----------------------------
 -- Table structure for branch_table
 -- ----------------------------
 DROP TABLE IF EXISTS `branch_table`;
@@ -42,6 +48,34 @@ CREATE TABLE `branch_table`  (
   `branch_creator` int(11) NULL DEFAULT NULL,
   PRIMARY KEY (`branch_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for file_table
+-- ----------------------------
+DROP TABLE IF EXISTS `file_table`;
+CREATE TABLE `file_table`  (
+  `file_id` int(11) NOT NULL AUTO_INCREMENT,
+  `file_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `file_track` int(11) NULL DEFAULT NULL,
+  `file_path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`file_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for inner_track_table
+-- ----------------------------
+DROP TABLE IF EXISTS `inner_track_table`;
+CREATE TABLE `inner_track_table`  (
+  `track_id` int(11) NOT NULL AUTO_INCREMENT,
+  `track_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `track_branch` int(11) NULL DEFAULT NULL,
+  `track_inner_path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `trach_full_path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `trach_left_value` int(11) NULL DEFAULT NULL,
+  `track_right_value` int(11) NULL DEFAULT NULL,
+  `track_status` int(11) NULL DEFAULT NULL COMMENT '路径状态：0存文件1存文件夹2都可以',
+  PRIMARY KEY (`track_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for user_table
@@ -56,5 +90,11 @@ CREATE TABLE `user_table`  (
   `user_creator` int(11) NULL DEFAULT NULL COMMENT '创建者',
   PRIMARY KEY (`user_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of user_table
+-- ----------------------------
+INSERT INTO `user_table` VALUES (1, 'admin', 'admin', 1, NULL, NULL);
+INSERT INTO `user_table` VALUES (2, 'user1', 'user1', 2, NULL, NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;
