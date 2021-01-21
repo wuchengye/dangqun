@@ -2,17 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f4eb0581-82fc-4b91-be43-9e344ba11a23" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dangqun.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/dangqun/aspect/JwtAsepect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dangqun/aspect/JwtAsepect.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/dangqun/constant/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dangqun/constant/Constants.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/dangqun/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dangqun/controller/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/dangqun/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dangqun/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/dangqun/mapper/AuthMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dangqun/mapper/AuthMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/dangqun/service/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dangqun/service/AuthService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mapping/AuthMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapping/AuthMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/dangqun/mapper/BranchMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dangqun/mapper/BranchMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/dangqun/service/BranchService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dangqun/service/BranchService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/mapping/BranchMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapping/BranchMapper.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -37,8 +33,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -131,7 +127,7 @@
       <workItem from="1611022523730" duration="210000" />
       <workItem from="1611022751641" duration="329000" />
       <workItem from="1611023118904" duration="12807000" />
-      <workItem from="1611046031486" duration="4784000" />
+      <workItem from="1611046031486" duration="29771000" />
     </task>
     <servers />
   </component>

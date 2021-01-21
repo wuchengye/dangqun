@@ -19,4 +19,8 @@
     <select id="selectOneByName" resultType="com.dangqun.entity.BranchEntity">
         select * from branch_table where branch_name = #{branchName}
     </select>
+
+    <select id="selectOneById" resultType="com.dangqun.entity.BranchEntity">
+        select * from branch_table where branch_id = #{branchId}
+    </select>
 </mapper>

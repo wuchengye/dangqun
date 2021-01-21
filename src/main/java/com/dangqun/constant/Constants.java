@@ -26,4 +26,7 @@ public class Constants {
      */
     public static final String BRANCH_AND_FILE_PARENT_PATH = "/home/dangqun/files";
     public static final String BRANCH_AND_FILE_PATH_SPLIT = "/";
+    public static final int TRACK_STATUS_SAVE_ALL = 2;
+    public static final int TRACK_STATUS_SAVE_FOLDER = 1;
+    public static final int TRACK_STATUS_SAVE_FILE = 0;
 }

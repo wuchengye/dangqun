@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dangqun.mapper.TrackMapper">
+    <insert id="insertTrackReturnId" parameterType="com.dangqun.entity.TrackEntity" useGeneratedKeys="true" keyProperty="trackId">
+        insert into inner_track_table (track_name,track_branch,track_left_value,track_right_value,track_status)
+        values (#{trackName},#{trackBranch},#{trackLeftValue},#{trackRightValue},#{trackStatus})
+    </insert>
+    <update id="updateTrack" parameterType="com.dangqun.entity.TrackEntity">
+        update inner_track_table set track_name = #{trackName},track_branch = #{trackBranch},track_inner_path = #{trackInnerPath},
+        track_full_path = #{trackFullPath},track_left_value = #{trackLeftValue},track_right_value = #{trackRightValue},
+        track_status = #{trackStatus} where track_id = #{trackId}
+    </update>
+    <select id="selectAllByBranch" resultType="com.dangqun.entity.TrackEntity">
+        select * from inner_track_table where track_branch = #{trackBranch}
+    </select>
+</mapper>

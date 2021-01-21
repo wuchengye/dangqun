@@ -16,4 +16,6 @@ public interface BranchMapper {
     int updateBranch(BranchEntity branchEntity);
 
     int deleteBranch(Integer branchId);
+
+    BranchEntity selectOneById(Integer branchId);
 }

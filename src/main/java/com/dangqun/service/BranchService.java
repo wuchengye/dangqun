@@ -28,4 +28,8 @@ public class BranchService {
     public int deleteBranch(Integer branchId) {
         return branchMapper.deleteBranch(branchId);
     }
+
+    public BranchEntity selectOneById(Integer branchId) {
+        return branchMapper.selectOneById(branchId);
+    }
 }
