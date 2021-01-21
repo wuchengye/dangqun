@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dangqun.mapper.BranchMapper">
+
+    <insert id="insertBranchReturnId" parameterType="com.dangqun.entity.BranchEntity" useGeneratedKeys="true" keyProperty="branchId">
+        insert into branch_table (branch_name,branch_root_path,branch_creator)
+        values (#{branchName},#{branchRootPath},#{branchCreator})
+    </insert>
+
+    <update id="updateBranch" parameterType="com.dangqun.entity.BranchEntity">
+        update branch_table set branch_name = #{branchName},branch_root_path = #{branchRootPath},branch_creator = #{branchCreator}
+        where branch_id = #{branchId}
+    </update>
+
+    <delete id="deleteBranch">
+        delete from branch_table where branch_id = #{branchId}
+    </delete>
+
+    <select id="selectOneByName" resultType="com.dangqun.entity.BranchEntity">
+        select * from branch_table where branch_name = #{branchName}
+    </select>
+
+    <select id="selectOneById" resultType="com.dangqun.entity.BranchEntity">
+        select * from branch_table where branch_id = #{branchId}
+    </select>
+</mapper>

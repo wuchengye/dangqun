@@ -4,7 +4,7 @@ import com.dangqun.annotation.CheckIsManager;
 import com.dangqun.constant.Constants;
 import com.dangqun.entity.AuthEntity;
 import com.dangqun.vo.AddAuthMethodBody;
-import com.dangqun.vo.DeleteAuthMethodBody;
+import com.dangqun.vo.IdBody;
 import com.dangqun.vo.UpdateAuthMethodBody;
 import com.dangqun.vo.restful.Result;
 import com.dangqun.service.AuthService;
@@ -28,7 +28,11 @@ public class AuthController {
     @PostMapping("/addAuth")
     @CheckIsManager
     public Result addAuth(@RequestBody @Valid AddAuthMethodBody body){
-        AuthEntity authEntity = new AuthEntity();
+        AuthEntity authEntity = authService.selectOneByName(body.getAuthName());
+        if (authEntity != null){
+            return Result.failure("权限名重复");
+        }
+        authEntity = new AuthEntity();
         authEntity.setAuthName(body.getAuthName());
         authEntity.setAuthBranch(body.getAuthBranch());
         authEntity.setAuthBranchPath(body.getAuthBranchPath());
@@ -48,6 +52,12 @@ public class AuthController {
         if(authEntity == null || authEntity.getAuthDefault() == Constants.AUTH_DEFAULT){
             return Result.failure("没有该权限或不允许修改");
         }
+        if(!authEntity.getAuthName().equals(body.getAuthName())){
+            AuthEntity selectByName = authService.selectOneByName(body.getAuthName());
+            if(selectByName != null){
+                return Result.failure("权限名重复");
+            }
+        }
         authEntity.setAuthName(body.getAuthName());
         authEntity.setAuthBranch(body.getAuthBranch());
         authEntity.setAuthBranchPath(body.getAuthBranchPath());
@@ -60,8 +70,8 @@ public class AuthController {
 
     @PostMapping("/deleteAuth")
     @CheckIsManager
-    public Result deleteAuth(@RequestBody @Valid DeleteAuthMethodBody body){
-        AuthEntity authEntity = authService.selectOneById(body.getAuthId());
+    public Result deleteAuth(@RequestBody @Valid IdBody body){
+        AuthEntity authEntity = authService.selectOneById(body.getId());
         if(authEntity == null || authEntity.getAuthDefault() == Constants.AUTH_DEFAULT){
             return Result.failure("没有该权限或不允许删除");
         }

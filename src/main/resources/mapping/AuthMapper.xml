@@ -22,4 +22,7 @@
     <select id="selectAllAuth" resultType="com.dangqun.entity.AuthEntity">
         select * from auth_table
     </select>
+    <select id="selectOneByName" resultType="com.dangqun.entity.AuthEntity">
+        select * from auth_table where auth_name = #{authName}
+    </select>
 </mapper>

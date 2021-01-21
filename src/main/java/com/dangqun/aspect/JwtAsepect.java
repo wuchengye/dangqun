@@ -5,9 +5,8 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.dangqun.service.common.RedisService;
 import com.dangqun.vo.restful.Result;
-import com.dangqun.service.UserService;
-import com.dangqun.utils.RedisUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -31,9 +30,7 @@ public class JwtAsepect {
     public static final String LOGIN_METHOD_NAME = "login";
 
     @Autowired
-    private RedisUtil redisUtil;
-    @Autowired
-    private UserService userService;
+    private RedisService redisService;
 
     /**
      * 定义切点:扫描controller包下所有类中方法，但排除加了PassToken注解的方法.
@@ -55,7 +52,7 @@ public class JwtAsepect {
                 String token= JWT.create().withAudience((String)map.get("userName"),String.valueOf((int)map.get("userAuthLevel")),time)
                         .sign(Algorithm.HMAC256((String) map.get("userPwd") + time));
                 //存入缓存
-                redisUtil.set((String)map.get("userName"),(String) map.get("userPwd") + time,1800L);
+                redisService.setLoginValid((String)map.get("userName"),(String) map.get("userPwd") + time);
                 map.put("token",token);
                 map.remove("userPwd");
                 return Result.success(map);
@@ -73,7 +70,7 @@ public class JwtAsepect {
             } catch (JWTDecodeException j) {
                 return Result.failure("403","无效token");
             }
-            String userPwdAndTime = redisUtil.get(userName);
+            String userPwdAndTime = redisService.getLoginValid(userName);
             if(userPwdAndTime == null){
                 return Result.failure("403","token过期");
             }
@@ -84,7 +81,7 @@ public class JwtAsepect {
             } catch (JWTVerificationException e) {
                 return Result.failure("403","token错误");
             }
-            redisUtil.expire(userName,1800L);
+            redisService.expireLoginValid(userName);
             return (Result) point.proceed();
         }
     }

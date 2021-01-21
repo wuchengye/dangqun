@@ -19,4 +19,14 @@ public class Constants {
     public static final int AUTH_LEVEL_COMMON = 1;
     public static final int AUTH_DEFAULT = 1;
     public static final int AUTH_NOT_DEFAULT = 0;
+
+    /**
+     * @date 2021-01-19 11:57
+     * 文件及文件夹路径相关常量：路径末尾没有分隔符
+     */
+    public static final String BRANCH_AND_FILE_PARENT_PATH = "/home/dangqun/files";
+    public static final String BRANCH_AND_FILE_PATH_SPLIT = "/";
+    public static final int TRACK_STATUS_SAVE_ALL = 2;
+    public static final int TRACK_STATUS_SAVE_FOLDER = 1;
+    public static final int TRACK_STATUS_SAVE_FILE = 0;
 }
