@@ -7,8 +7,9 @@ import lombok.Data;
  */
 @Data
 public class FileEntity {
-    private int fileId;
+    private Integer fileId;
     private String fileName;
-    private int fileTrack;
     private String filePath;
+    private Integer fileTrack;
+    private Integer fileBranch;
 }

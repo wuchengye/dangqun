@@ -7,10 +7,10 @@ import lombok.Data;
  */
 @Data
 public class UserEntity {
-    private int userId;
+    private Integer userId;
     private String userName;
     private String userPwd;
-    private int userAuth;
-    private int userBranch;
-    private int userCreator;
+    private Integer userAuth;
+    private Integer userBranch;
+    private Integer userCreator;
 }

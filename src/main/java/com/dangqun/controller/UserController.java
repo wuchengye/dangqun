@@ -57,7 +57,7 @@ public class UserController {
     @PostMapping("/userModifyPwd")
     public Result userModifyPwd(@RequestBody @Valid UserModifyPwdBody body){
         UserEntity userEntity = redisService.getUserData();
-        if(userEntity == null || userEntity.getUserPwd().equals(body.getUserOldPwd())){
+        if(userEntity == null || !userEntity.getUserPwd().equals(body.getUserOldPwd())){
             return Result.failure("密码错误");
         }
         int update = userService.modifyPwd(userEntity.getUserId(),body.getUserNewPwd());
@@ -81,10 +81,7 @@ public class UserController {
             userEntity.setUserCreator(creator.getUserId());
         }
         int update = userService.insertUser(userEntity);
-        if(update == 0){
-            return Result.failure("新增用户失败");
-        }
-        return Result.success();
+        return update == 0 ?  Result.failure("新增用户失败") : Result.success();
     }
 
     @PostMapping("/updateUser")

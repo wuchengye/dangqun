@@ -2,19 +2,57 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dangqun.mapper.TrackMapper">
     <insert id="insertTrackReturnId" parameterType="com.dangqun.entity.TrackEntity" useGeneratedKeys="true" keyProperty="trackId">
-        insert into inner_track_table (track_name,track_branch,track_left_value,track_right_value,track_status)
-        values (#{trackName},#{trackBranch},#{trackLeftValue},#{trackRightValue},#{trackStatus})
+        insert into inner_track_table (track_name,track_branch,track_left_value,track_right_value,track_parent_id,track_status)
+        values (#{trackName},#{trackBranch},#{trackLeftValue},#{trackRightValue},#{trackParentId},#{trackStatus})
     </insert>
+
     <update id="updateTrack" parameterType="com.dangqun.entity.TrackEntity">
         update inner_track_table set track_name = #{trackName},track_branch = #{trackBranch},track_inner_path = #{trackInnerPath},
         track_full_path = #{trackFullPath},track_left_value = #{trackLeftValue},track_right_value = #{trackRightValue},
-        track_status = #{trackStatus} where track_id = #{trackId}
+        track_parent_id = #{trackParentId},track_status = #{trackStatus} where track_id = #{trackId}
     </update>
+
+    <update id="updateLeftWhenInsert">
+        update inner_track_table set track_left_value = track_left_value + 2 where track_branch = #{trackBranch}
+        and track_left_value <![CDATA[ >= ]]> #{trackRightValue}
+    </update>
+
+    <update id="updateRightWhenInsert">
+        update inner_track_table set track_right_value = track_right_value + 2 where track_branch = #{trackBranch}
+        and track_right_value <![CDATA[ >= ]]> #{trackRightValue}
+    </update>
+
+    <update id="updateLeftWhenDelete">
+        update inner_track_table set track_left_value = track_left_value -(#{trackRightValue} - #{trackLeftValue} + 1)
+        where track_branch = #{trackBranch} and track_left_value &gt; #{trackLeftValue}
+    </update>
+
+    <update id="updateRightWhenDelete">
+        update inner_track_table set track_right_value = track_right_value - (#{trackRightValue} - #{trackLeftValue} + 1)
+        where track_branch = #{trackBranch} and track_right_value &gt; #{trackRightValue}
+    </update>
+
+    <delete id="deleteSonList">
+        delete from inner_track_table where track_branch = #{trackBranch}
+        and track_left_value <![CDATA[ >= ]]> #{trackLeftValue}
+        and track_right_value <![CDATA[ <= ]]> #{trackRightValue}
+    </delete>
+
     <select id="selectAllByBranch" resultType="com.dangqun.entity.TrackEntity">
         select * from inner_track_table where track_branch = #{trackBranch}
     </select>
 
     <select id="selectOneById" resultType="com.dangqun.entity.TrackEntity">
         select * from inner_track_table where track_id = #{trackId}
+    </select>
+
+    <select id="selectSonList" resultType="com.dangqun.entity.TrackEntity">
+        select * from inner_track_table where track_branch = #{trackBranch}
+        and track_left_value <![CDATA[ >= ]]> #{trackLeftValue}
+        and track_right_value <![CDATA[ <= ]]> #{trackRightValue}
+    </select>
+
+    <select id="selectByParent" resultType="com.dangqun.entity.TrackEntity">
+        select * from inner_track_table where track_parent_id = #{trackParentId}
     </select>
 </mapper>

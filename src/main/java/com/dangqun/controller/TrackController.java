@@ -7,14 +7,15 @@ import com.dangqun.entity.TrackEntity;
 import com.dangqun.service.BranchService;
 import com.dangqun.service.TrackService;
 import com.dangqun.vo.AddTrackMethodBody;
+import com.dangqun.vo.DeleteTrackMethodBody;
 import com.dangqun.vo.restful.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import javax.validation.Valid;
+import java.io.File;
 import java.util.List;
 
 /**
@@ -60,13 +61,39 @@ public class TrackController {
             }
         }else {
             TrackEntity parentEntity = trackService.selectOneById(body.getTrackParentId());
-            if(parentEntity == null || parentEntity.getTrackBranch() != body.getBranchId()){
+            if(parentEntity == null || parentEntity.getTrackBranch() != body.getBranchId().intValue()){
                 return Result.failure("父路径ID错误或支部信息不匹配");
             }
             if(parentEntity.getTrackStatus() == Constants.TRACK_STATUS_SAVE_FILE){
                 return Result.failure("父路径下不允许创建路径");
             }
-            trackService.insertTrackAndUpdateOthers(parentEntity,newTrack);
+            try {
+                newTrack = trackService.insertTrackAndUpdateOthers(parentEntity,newTrack);
+            } catch (Exception e) {
+                return Result.failure(e.getMessage());
+            }
         }
+        File file = new File(newTrack.getTrackFullPath());
+        file.mkdirs();
+        return Result.success();
     }
+
+    @PostMapping("/deleteTrack")
+    @CheckIsManager
+    public Result deleteTrack(@RequestBody @Valid DeleteTrackMethodBody body){
+        TrackEntity deleteEntity = trackService.selectOneById(body.getTrackId());
+        if(deleteEntity == null || deleteEntity.getTrackBranch() != body.getTrackBranch().intValue()){
+            return Result.failure("参数有误");
+        }
+        List<TrackEntity> deleteSonList = trackService.selectSonList(deleteEntity);
+        //在路径表中删除
+        trackService.deleteTrackAndUpdateOthers(deleteEntity);
+        if(deleteEntity.getTrackParentId() != null){
+            List<TrackEntity> parentSonList = trackService.selectByParent(deleteEntity.getTrackParentId());
+
+        }
+
+    }
+
+
 }

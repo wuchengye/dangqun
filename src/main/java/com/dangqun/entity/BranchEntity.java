@@ -7,8 +7,8 @@ import lombok.Data;
  */
 @Data
 public class BranchEntity {
-    private int branchId;
+    private Integer branchId;
     private String branchName;
     private String branchRootPath;
-    private int branchCreator;
+    private Integer branchCreator;
 }

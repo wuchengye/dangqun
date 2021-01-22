@@ -18,4 +18,18 @@ public interface TrackMapper {
     int updateTrack(TrackEntity trackEntity);
 
     TrackEntity selectOneById(Integer trackId);
+
+    void updateLeftWhenInsert(int trackBranch, int trackRightValue);
+
+    void updateRightWhenInsert(int trackBranch, int trackRightValue);
+
+    List<TrackEntity> selectSonList(Integer trackBranch,Integer trackLeftValue, Integer trackRightValue);
+
+    void deleteSonList(Integer trackBranch, Integer trackLeftValue, Integer trackRightValue);
+
+    void updateLeftWhenDelete(Integer trackBranch, Integer trackLeftValue, Integer trackRightValue);
+
+    void updateRightWhenDelete(Integer trackBranch, Integer trackLeftValue, Integer trackRightValue);
+
+    List<TrackEntity> selectByParent(Integer trackParentId);
 }

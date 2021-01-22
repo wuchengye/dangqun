@@ -39,10 +39,7 @@ public class AuthController {
         authEntity.setAuthLevel(Constants.AUTH_LEVEL_SECONDARY);
         authEntity.setAuthDefault(Constants.AUTH_NOT_DEFAULT);
         int insert = authService.insertAuth(authEntity);
-        if(insert == 0){
-            return Result.failure("新增失败");
-        }
-        return Result.success();
+        return insert == 0 ? Result.failure("新增失败") : Result.success();
     }
 
     @PostMapping("/updateAuth")
@@ -62,10 +59,7 @@ public class AuthController {
         authEntity.setAuthBranch(body.getAuthBranch());
         authEntity.setAuthBranchPath(body.getAuthBranchPath());
         int update = authService.updateAuth(authEntity);
-        if(update == 0){
-            return Result.failure("更新失败");
-        }
-        return Result.success();
+        return update == 0 ? Result.failure("更新失败") : Result.success();
     }
 
     @PostMapping("/deleteAuth")
@@ -76,10 +70,7 @@ public class AuthController {
             return Result.failure("没有该权限或不允许删除");
         }
         int delete = authService.deleteAuthById(authEntity.getAuthId());
-        if(delete == 0){
-            return Result.failure("删除失败");
-        }
-        return Result.success();
+        return delete == 0 ? Result.failure("删除失败") : Result.success();
     }
 
     @PostMapping("/getAuth")

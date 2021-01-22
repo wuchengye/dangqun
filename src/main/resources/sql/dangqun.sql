@@ -11,7 +11,7 @@
  Target Server Version : 50718
  File Encoding         : 65001
 
- Date: 21/01/2021 19:43:40
+ Date: 22/01/2021 17:12:05
 */
 
 SET NAMES utf8mb4;
@@ -56,8 +56,9 @@ DROP TABLE IF EXISTS `file_table`;
 CREATE TABLE `file_table`  (
   `file_id` int(11) NOT NULL AUTO_INCREMENT,
   `file_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `file_track` int(11) NULL DEFAULT NULL,
   `file_path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `file_track` int(11) NULL DEFAULT NULL,
+  `file_branch` int(11) NULL DEFAULT NULL,
   PRIMARY KEY (`file_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
@@ -73,6 +74,7 @@ CREATE TABLE `inner_track_table`  (
   `trach_full_path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `trach_left_value` int(11) NULL DEFAULT NULL,
   `track_right_value` int(11) NULL DEFAULT NULL,
+  `track_parent_id` int(11) NULL DEFAULT NULL,
   `track_status` int(11) NULL DEFAULT NULL COMMENT '路径状态：0存文件1存文件夹2都可以',
   PRIMARY KEY (`track_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;

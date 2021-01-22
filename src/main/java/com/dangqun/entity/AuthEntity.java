@@ -7,10 +7,10 @@ import lombok.Data;
  */
 @Data
 public class AuthEntity {
-    private int authId;
+    private Integer authId;
     private String authName;
-    private int authLevel;
+    private Integer authLevel;
     private String authBranch;
     private String authBranchPath;
-    private int authDefault;
+    private Integer authDefault;
 }

@@ -7,12 +7,13 @@ import lombok.Data;
  */
 @Data
 public class TrackEntity {
-    private int trackId;
+    private Integer trackId;
     private String trackName;
-    private int trackBranch;
+    private Integer trackBranch;
     private String trackInnerPath;
     private String trackFullPath;
-    private int trackLeftValue;
-    private int trackRightValue;
-    private int trackStatus;
+    private Integer trackLeftValue;
+    private Integer trackRightValue;
+    private Integer trackParentId;
+    private Integer trackStatus;
 }
