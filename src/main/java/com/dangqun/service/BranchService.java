@@ -5,6 +5,8 @@ import com.dangqun.mapper.BranchMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author wcy
  */
@@ -31,5 +33,9 @@ public class BranchService {
 
     public BranchEntity selectOneById(Integer branchId) {
         return branchMapper.selectOneById(branchId);
+    }
+
+    public List<BranchEntity> selectAll() {
+        return branchMapper.selectAll();
     }
 }

@@ -3,6 +3,8 @@ package com.dangqun.mapper;
 import com.dangqun.entity.BranchEntity;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * @author wcy
  */
@@ -18,4 +20,6 @@ public interface BranchMapper {
     int deleteBranch(Integer branchId);
 
     BranchEntity selectOneById(Integer branchId);
+
+    List<BranchEntity> selectAll();
 }

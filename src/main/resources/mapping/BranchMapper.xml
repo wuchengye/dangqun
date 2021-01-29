@@ -23,4 +23,8 @@
     <select id="selectOneById" resultType="com.dangqun.entity.BranchEntity">
         select * from branch_table where branch_id = #{branchId}
     </select>
+
+    <select id="selectAll" resultType="com.dangqun.entity.BranchEntity">
+        select * from branch_table
+    </select>
 </mapper>

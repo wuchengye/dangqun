@@ -5,7 +5,9 @@ import com.dangqun.constant.Constants;
 import com.dangqun.entity.BranchEntity;
 import com.dangqun.entity.UserEntity;
 import com.dangqun.service.BranchService;
+import com.dangqun.service.UserService;
 import com.dangqun.service.common.RedisService;
+import com.dangqun.utils.FileUtils;
 import com.dangqun.vo.IdBody;
 import com.dangqun.vo.NameBody;
 import com.dangqun.vo.restful.Result;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.io.File;
+import java.util.List;
 
 /**
  * @author wcy
@@ -27,6 +30,8 @@ public class BranchController {
     private BranchService branchService;
     @Autowired
     private RedisService redisService;
+    @Autowired
+    private UserService userService;
 
     @PostMapping("/addBranch")
     @CheckIsManager
@@ -59,10 +64,24 @@ public class BranchController {
     @PostMapping("/deleteBranch")
     @CheckIsManager
     public Result deleteBranch(@RequestBody @Valid IdBody body){
+        BranchEntity deleteBranch = branchService.selectOneById(body.getId());
+        if(deleteBranch == null){
+            return Result.failure("删除对象不存在");
+        }
+        List<UserEntity> userList = userService.selectAllByBranch(deleteBranch.getBranchId());
+        if(userList.size() != 0){
+            return Result.failure("还有用户绑定该支部");
+        }
         int delete = branchService.deleteBranch(body.getId());
         if(delete == 0){
             return Result.failure("删除失败");
         }
+        //删除路径表中对应路径
+
+        //删除文件表对应支部id数据
+
+        //递归删除文件夹
+        FileUtils.delDir(deleteBranch.getBranchRootPath());
         return Result.success();
     }
 }

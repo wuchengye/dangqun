@@ -6,9 +6,11 @@ import com.dangqun.entity.BranchEntity;
 import com.dangqun.entity.TrackEntity;
 import com.dangqun.service.BranchService;
 import com.dangqun.service.TrackService;
+import com.dangqun.utils.FileUtils;
 import com.dangqun.vo.AddTrackMethodBody;
 import com.dangqun.vo.DeleteTrackMethodBody;
 import com.dangqun.vo.restful.Result;
+import lombok.Synchronized;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,6 +33,7 @@ public class TrackController {
 
     @PostMapping("/addTrack")
     @CheckIsManager
+    @Synchronized
     public Result addTrack(@RequestBody @Valid AddTrackMethodBody body){
         BranchEntity branchEntity = branchService.selectOneById(body.getBranchId());
         if (branchEntity == null){
@@ -80,6 +83,7 @@ public class TrackController {
 
     @PostMapping("/deleteTrack")
     @CheckIsManager
+    @Synchronized
     public Result deleteTrack(@RequestBody @Valid DeleteTrackMethodBody body){
         TrackEntity deleteEntity = trackService.selectOneById(body.getTrackId());
         if(deleteEntity == null || deleteEntity.getTrackBranch() != body.getTrackBranch().intValue()){
@@ -89,11 +93,18 @@ public class TrackController {
         //在路径表中删除
         trackService.deleteTrackAndUpdateOthers(deleteEntity);
         if(deleteEntity.getTrackParentId() != null){
+            //更新父路径状态
             List<TrackEntity> parentSonList = trackService.selectByParent(deleteEntity.getTrackParentId());
-
+            if(parentSonList.size() == 0){
+                TrackEntity parent = trackService.selectOneById(deleteEntity.getTrackParentId());
+                parent.setTrackStatus(Constants.TRACK_STATUS_SAVE_ALL);
+                trackService.updateTrack(parent);
+            }
         }
+        //删除路径及其子路径中对应文件表
 
+        //递归删除文件夹
+        FileUtils.delDir(deleteEntity.getTrackFullPath());
+        return Result.success();
     }
-
-
 }

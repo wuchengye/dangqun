@@ -5,6 +5,25 @@
         select * from user_table where user_name = #{userName}
     </select>
 
+    <select id="selectAllByAuth" resultType="com.dangqun.entity.UserEntity">
+        select * from user_table where user_auth = #{userAuth}
+    </select>
+
+    <select id="selectAllByBranch" resultType="com.dangqun.entity.UserEntity">
+        select * from user_table where user_branch = #{userBranch}
+    </select>
+
+    <select id="getUserAndAuthAndBranch" resultType="java.util.Map">
+        select u.user_id as userId, u.user_name as userName, a.auth_id as authId, a.auth_name as authName,
+                a.auth_level as authLevel, b.branch_id as branchId, b.branch_name as branchName
+                from user_table u
+                left join auth_table a on a.auth_id = u.user_auth
+                left join branch_table b on b.branch_id = u.user_branch
+                <if test="userName != null and userName != ''">
+                    where u.user_name = #{userName}
+                </if>
+    </select>
+
     <insert id="insertUser" parameterType="com.dangqun.entity.UserEntity">
         insert into user_table (user_name,user_pwd,user_auth,user_branch,user_creator)
                     values (#{userName},#{userPwd},#{userAuth},#{userBranch},#{userCreator})

@@ -3,18 +3,18 @@
   <component name="ChangeListManager">
     <list default="true" id="f4eb0581-82fc-4b91-be43-9e344ba11a23" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/dangqun/constant/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dangqun/constant/Constants.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/dangqun/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dangqun/controller/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/dangqun/controller/BranchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dangqun/controller/BranchController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/dangqun/controller/TrackController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dangqun/controller/TrackController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/dangqun/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dangqun/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/dangqun/entity/AuthEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dangqun/entity/AuthEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/dangqun/entity/BranchEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dangqun/entity/BranchEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/dangqun/entity/FileEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dangqun/entity/FileEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/dangqun/entity/TrackEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dangqun/entity/TrackEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/dangqun/entity/UserEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dangqun/entity/UserEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/dangqun/mapper/TrackMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dangqun/mapper/TrackMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/dangqun/service/TrackService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dangqun/service/TrackService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/dangqun/vo/DeleteAuthMethodBody.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mapping/TrackMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapping/TrackMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/dangqun/mapper/BranchMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dangqun/mapper/BranchMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/dangqun/mapper/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dangqun/mapper/UserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/dangqun/service/BranchService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dangqun/service/BranchService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/dangqun/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dangqun/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/mapping/BranchMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapping/BranchMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/mapping/UserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapping/UserMapper.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -68,7 +68,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.4275862" />
-    <property name="settings.editor.selected.configurable" value="http.proxy" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RebelAgentSelection">
     <selection>jr</selection>
@@ -135,6 +135,8 @@
       <workItem from="1611023118904" duration="12807000" />
       <workItem from="1611046031486" duration="30330000" />
       <workItem from="1611237007939" duration="8220000" />
+      <workItem from="1611635548456" duration="16180000" />
+      <workItem from="1611823559821" duration="7173000" />
     </task>
     <servers />
   </component>

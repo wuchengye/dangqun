@@ -3,6 +3,8 @@ package com.dangqun.controller;
 import com.dangqun.annotation.CheckIsManager;
 import com.dangqun.constant.Constants;
 import com.dangqun.entity.AuthEntity;
+import com.dangqun.entity.UserEntity;
+import com.dangqun.service.UserService;
 import com.dangqun.vo.AddAuthMethodBody;
 import com.dangqun.vo.IdBody;
 import com.dangqun.vo.UpdateAuthMethodBody;
@@ -24,10 +26,17 @@ import java.util.List;
 public class AuthController {
     @Autowired
     private AuthService authService;
+    @Autowired
+    private UserService userService;
 
     @PostMapping("/addAuth")
     @CheckIsManager
     public Result addAuth(@RequestBody @Valid AddAuthMethodBody body){
+        String[] branches = body.getAuthBranch().split(";");
+        String[] tracks = body.getAuthBranchPath().split(";");
+        if(branches.length != tracks.length){
+            return Result.failure("权限和路径不对应");
+        }
         AuthEntity authEntity = authService.selectOneByName(body.getAuthName());
         if (authEntity != null){
             return Result.failure("权限名重复");
@@ -45,6 +54,11 @@ public class AuthController {
     @PostMapping("/updateAuth")
     @CheckIsManager
     public Result updateAuth(@RequestBody @Valid UpdateAuthMethodBody body){
+        String[] branches = body.getAuthBranch().split(";");
+        String[] tracks = body.getAuthBranchPath().split(";");
+        if(branches.length != tracks.length){
+            return Result.failure("权限和路径不对应");
+        }
         AuthEntity authEntity = authService.selectOneById(body.getAuthId());
         if(authEntity == null || authEntity.getAuthDefault() == Constants.AUTH_DEFAULT){
             return Result.failure("没有该权限或不允许修改");
@@ -68,6 +82,10 @@ public class AuthController {
         AuthEntity authEntity = authService.selectOneById(body.getId());
         if(authEntity == null || authEntity.getAuthDefault() == Constants.AUTH_DEFAULT){
             return Result.failure("没有该权限或不允许删除");
+        }
+        List<UserEntity> userList = userService.selectAllByAuth(authEntity.getAuthId());
+        if(userList.size() != 0){
+            return Result.failure("还有用户绑定该权限");
         }
         int delete = authService.deleteAuthById(authEntity.getAuthId());
         return delete == 0 ? Result.failure("删除失败") : Result.success();

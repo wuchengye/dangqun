@@ -10,13 +10,16 @@ import com.dangqun.vo.*;
 import com.dangqun.vo.restful.Result;
 import com.dangqun.service.AuthService;
 import com.dangqun.service.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -109,8 +112,15 @@ public class UserController {
     public Result deleteUser(@RequestBody @Valid ValidList<IdBody> userIdList) {
         int successTotal = 0;
         for (IdBody body : userIdList){
-            successTotal = successTotal + userService.deleteUser(body.getId());
+            int delete = userService.deleteUser(body.getId());
+            successTotal = successTotal + delete;
         }
         return successTotal == 0 ? Result.failure() : Result.success("成功:" + successTotal);
+    }
+
+    @PostMapping("/getUsers")
+    @CheckIsManager
+    public Result getUsers(@RequestBody @Valid GetUsersMethodBody body){
+        return Result.success(userService.getUserAndAuthAndBranch(body));
     }
 }
