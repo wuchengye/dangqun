@@ -29,4 +29,10 @@ public class Constants {
     public static final int TRACK_STATUS_SAVE_ALL = 2;
     public static final int TRACK_STATUS_SAVE_FOLDER = 1;
     public static final int TRACK_STATUS_SAVE_FILE = 0;
+
+    /**
+     * @date 2021-02-03 19:52
+     * 上传文件时，与前端配合的参数
+     */
+    public static final long FILE_CHUNK_SIZE = 5242880;
 }

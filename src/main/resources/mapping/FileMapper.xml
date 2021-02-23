@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dangqun.mapper.FileMapper">
+    <insert id="insertFile">
+        insert into file_table (file_name,file_path,file_track,file_branch)
+        values (#{fileName},#{filePath},#{fileTrack},#{fileBranch})
+    </insert>
+    <select id="selectAllByTrackId" resultType="com.dangqun.entity.FileEntity">
+        select * from file_table where file_track = #{trackId}
+    </select>
+</mapper>

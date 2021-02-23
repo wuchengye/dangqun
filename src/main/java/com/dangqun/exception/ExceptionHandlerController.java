@@ -8,6 +8,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.MultipartException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import java.util.List;
  */
 @RestControllerAdvice
 public class ExceptionHandlerController {
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseBody
     public Result exception(MethodArgumentNotValidException e){
@@ -27,5 +29,19 @@ public class ExceptionHandlerController {
             failureList.add(fieldError.getField() + ":" + fieldError.getDefaultMessage());
         }
         return Result.failure(failureList.toString());
+    }
+
+    @ExceptionHandler(value = MultipartException.class)
+    @ResponseBody
+    public Result eofException(MultipartException e){
+        System.out.println("上传中断");
+        return Result.failure();
+    }
+
+    @ExceptionHandler(value = Exception.class)
+    @ResponseBody
+    public Result exception(Exception e){
+        e.printStackTrace();
+        return Result.failure("500","系统异常");
     }
 }

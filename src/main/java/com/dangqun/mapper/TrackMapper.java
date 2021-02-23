@@ -2,6 +2,7 @@ package com.dangqun.mapper;
 
 import com.dangqun.entity.TrackEntity;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -32,4 +33,6 @@ public interface TrackMapper {
     void updateRightWhenDelete(Integer trackBranch, Integer trackLeftValue, Integer trackRightValue);
 
     List<TrackEntity> selectByParent(Integer trackParentId);
+
+    List<TrackEntity> selectInIds(@Param("trackIds") List<String> trackIds);
 }

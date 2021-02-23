@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -77,5 +79,10 @@ public class TrackService {
 
     public List<TrackEntity> selectByParent(Integer trackParentId) {
         return trackMapper.selectByParent(trackParentId);
+    }
+
+    public List<TrackEntity> selectInIds(String[] ids) {
+        List<String> list = Arrays.asList(ids);
+        return trackMapper.selectInIds(list);
     }
 }

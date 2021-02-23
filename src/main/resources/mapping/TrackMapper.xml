@@ -55,4 +55,11 @@
     <select id="selectByParent" resultType="com.dangqun.entity.TrackEntity">
         select * from inner_track_table where track_parent_id = #{trackParentId}
     </select>
+
+    <select id="selectInIds" resultType="com.dangqun.entity.TrackEntity">
+        select * from inner_track_table where track_id in 
+        <foreach collection="trackIds" item="i" index="index" open="(" close=")" separator=",">
+            #{i}
+        </foreach>
+    </select>
 </mapper>
