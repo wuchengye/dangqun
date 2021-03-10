@@ -4,13 +4,27 @@
     <list default="true" id="f4eb0581-82fc-4b91-be43-9e344ba11a23" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/dangqun/DangQunApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dangqun/DangQunApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/dangqun/annotation/FileExceptionRollBack.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/dangqun/aspect/JwtAsepect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dangqun/aspect/JwtAsepect.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/dangqun/aspect/UploadExceptionAspect.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/dangqun/constant/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dangqun/constant/Constants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/dangqun/controller/BranchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dangqun/controller/BranchController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/dangqun/controller/TrackController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dangqun/controller/TrackController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/dangqun/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dangqun/controller/UserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/dangqun/controller/common/CommonController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dangqun/controller/common/CommonController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/dangqun/exception/ExceptionHandlerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dangqun/exception/ExceptionHandlerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/dangqun/mapper/FileMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dangqun/mapper/FileMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/dangqun/mapper/TrackMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dangqun/mapper/TrackMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/dangqun/mapper/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dangqun/mapper/UserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/dangqun/service/FileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dangqun/service/FileService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/dangqun/service/TrackService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dangqun/service/TrackService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/dangqun/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dangqun/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/dangqun/service/common/RedisService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dangqun/service/common/RedisService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/dangqun/utils/FileUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dangqun/utils/FileUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/mapping/FileMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapping/FileMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/mapping/TrackMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapping/TrackMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/mapping/UserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapping/UserMapper.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -35,8 +49,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="AnnotationType" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -72,10 +86,10 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.dangqun.utils" />
       <recent name="com.dangqun.swagger" />
       <recent name="com.dangqun.annotation" />
       <recent name="com.dangqun.config" />
-      <recent name="com.dangqun.utils" />
       <recent name="com.dangqun.restful" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
@@ -138,7 +152,10 @@
       <workItem from="1612230503261" duration="16371000" />
       <workItem from="1612338759306" duration="52939000" />
       <workItem from="1613958012427" duration="1327000" />
-      <workItem from="1613965476481" duration="5232000" />
+      <workItem from="1613965476481" duration="79524000" />
+      <workItem from="1614919388355" duration="3945000" />
+      <workItem from="1615286629593" duration="10000" />
+      <workItem from="1615343440734" duration="758000" />
     </task>
     <servers />
   </component>

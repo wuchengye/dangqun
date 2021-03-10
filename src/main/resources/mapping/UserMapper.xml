@@ -24,6 +24,14 @@
                 </if>
     </select>
 
+    <select id="findUserByAuthLevel" resultType="com.dangqun.entity.UserEntity">
+        select * from user_table where user_auth in (select auth_id from auth_table where auth_level = #{authLevel})
+    </select>
+
+    <select id="selectAll" resultType="com.dangqun.entity.UserEntity">
+        select * from user_table
+    </select>
+
     <insert id="insertUser" parameterType="com.dangqun.entity.UserEntity">
         insert into user_table (user_name,user_pwd,user_auth,user_branch,user_creator)
                     values (#{userName},#{userPwd},#{userAuth},#{userBranch},#{userCreator})

@@ -55,4 +55,12 @@ public class UserService {
         List<Map> mapList =  userMapper.getUserAndAuthAndBranch(body.getUserName());
         return new PageInfo(mapList);
     }
+
+    public List<UserEntity> findUserByAuthLevel(int authLevel) {
+        return userMapper.findUserByAuthLevel(authLevel);
+    }
+
+    public List<UserEntity> selectAll() {
+        return userMapper.selectAll();
+    }
 }

@@ -36,6 +36,10 @@ public class RedisService {
         redisUtil.expire(key,1800L);
     }
 
+    public void delToken(String key){
+        redisUtil.del(key);
+    }
+
     /**
      * @date 2021-01-19 16:01
      * 缓存用户在用户表中数据
@@ -51,6 +55,10 @@ public class RedisService {
         HttpServletRequest request = requestAttributes.getRequest();
         String token = request.getHeader("token");
         String userName = JWT.decode(token).getAudience().get(0);
+        return getUserData(userName);
+    }
+
+    public UserEntity getUserData(String userName){
         UserEntity userEntity;
         String key = USER_DATA_PREFIX + userName + userName.hashCode();
         String value = redisUtil.get(key);

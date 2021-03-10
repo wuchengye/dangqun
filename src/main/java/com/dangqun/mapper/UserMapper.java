@@ -28,4 +28,8 @@ public interface UserMapper {
     List<UserEntity> selectAllByBranch(int userBranch);
 
     List<Map> getUserAndAuthAndBranch(String userName);
+
+    List<UserEntity> findUserByAuthLevel(int authLevel);
+
+    List<UserEntity> selectAll();
 }

@@ -35,7 +35,7 @@ public class JwtAsepect {
     /**
      * 定义切点:扫描controller包下所有类中方法，但排除加了PassToken注解的方法.
      */
-    @Pointcut("execution(* com.dangqun.controller.*.*(..)) && !@annotation(com.dangqun.annotation.PassToken)")
+    @Pointcut("execution(* com.dangqun.controller..*.*(..)) && !@annotation(com.dangqun.annotation.PassToken)")
     public void jwt(){}
 
     @Around("jwt()")

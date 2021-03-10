@@ -5,6 +5,8 @@ import com.dangqun.constant.Constants;
 import com.dangqun.entity.BranchEntity;
 import com.dangqun.entity.UserEntity;
 import com.dangqun.service.BranchService;
+import com.dangqun.service.FileService;
+import com.dangqun.service.TrackService;
 import com.dangqun.service.UserService;
 import com.dangqun.service.common.RedisService;
 import com.dangqun.utils.FileUtils;
@@ -32,6 +34,10 @@ public class BranchController {
     private RedisService redisService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private TrackService trackService;
+    @Autowired
+    private FileService fileService;
 
     @PostMapping("/addBranch")
     @CheckIsManager
@@ -77,9 +83,9 @@ public class BranchController {
             return Result.failure("删除失败");
         }
         //删除路径表中对应路径
-
+        trackService.deleteAllByBranch(body.getId());
         //删除文件表对应支部id数据
-
+        fileService.deleteAllByBranch(body.getId());
         //递归删除文件夹
         FileUtils.delDir(deleteBranch.getBranchRootPath());
         return Result.success();

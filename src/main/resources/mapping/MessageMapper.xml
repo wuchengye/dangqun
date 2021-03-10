@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dangqun.mapper.MessageMapper">
+    <insert id="insertOne" parameterType="com.dangqun.entity.MessageEntity" useGeneratedKeys="true" keyProperty="mesId">
+        insert into message_table (mes_name,mes_content,mes_send_user,mes_rec_user,mes_type,
+        mes_begin_time,mes_end_time,mes_status,mes_confirm_user)
+        values (#{mesName},#{mesContent},#{mesSendUser},#{mesRecUser},#{mesType},#{mesBeginTime},#{mesEndTime},
+        #{mesStatus},#{mesConfirmUser})
+    </insert>
+    <update id="updateMes">
+        update message_table set mes_status = #{mesStatus},mes_end_time = #{mesEndTime},mes_confirm_user = #{mesConfirmUser}
+        where mes_id = #{mesId}
+    </update>
+    <select id="selectById" resultType="com.dangqun.entity.MessageEntity">
+        select * from message_table where mes_id = #{mesId}
+    </select>
+    <select id="selectByStatusAndRecUser" resultType="com.dangqun.entity.MessageEntity">
+        select * from message_table where mes_rec_user = #{userName} and mes_status = #{mesStatus}
+    </select>
+    <select id="selectByStatusAndType" resultType="com.dangqun.entity.MessageEntity">
+        select * from message_table where mes_type = #{mesType} and mes_status = #{mesStatus}
+    </select>
+    <select id="selectMes" resultType="com.dangqun.entity.MessageEntity">
+        select * from message_table where 1 = 1
+        <if test="mesName != null and mesName != ''">
+            and mes_name like #{mesName}
+        </if>
+        <if test="mesSendUser != null and mesSendUser != ''">
+            and mes_send_user like #{mesSendUser}
+        </if>
+        <if test="mesRecUser != null and mesRecUser != ''">
+            and mes_rec_user like #{mesRecUser}
+        </if>
+        <if test="beforeBeginTime != null and beforeBeginTime != ''">
+            and mes_begin_time <![CDATA[ >= ]]> #{beforeBeginTime}
+        </if>
+        <if test="afterBeginTime != null and afterBeginTime != ''">
+            and mes_begin_time <![CDATA[ <= ]]> #{afterBeginTime}
+        </if>
+        <if test="isConfirm != null">
+            and mes_status = #{isConfirm}
+        </if>
+    </select>
+</mapper>

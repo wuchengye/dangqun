@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dangqun.mapper.LogMapper">
+
+    <insert id="insertOne" parameterType="com.dangqun.entity.LogEntity">
+        insert into log_table (log_user,log_method,log_params,log_return,log_ip,log_time)
+        values (#{logUser},#{logMethod},#{logParams},#{logReturn},#{logIp},#{logTime})
+    </insert>
+</mapper>

@@ -35,4 +35,6 @@ public interface TrackMapper {
     List<TrackEntity> selectByParent(Integer trackParentId);
 
     List<TrackEntity> selectInIds(@Param("trackIds") List<String> trackIds);
+
+    void deleteAllByBranch(Integer id);
 }

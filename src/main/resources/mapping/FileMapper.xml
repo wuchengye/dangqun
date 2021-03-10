@@ -5,7 +5,33 @@
         insert into file_table (file_name,file_path,file_track,file_branch)
         values (#{fileName},#{filePath},#{fileTrack},#{fileBranch})
     </insert>
+    <delete id="deleteAllByBranch">
+        delete from file_table where file_branch = #{id}
+    </delete>
+    <delete id="deleteAllByTracks">
+        delete from file_table where file_track in
+        <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+    <delete id="deleteByIdsAndTrackId">
+        delete from file_table where file_id in
+        <foreach collection="fileIds" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+        and file_track = #{trackId}
+    </delete>
     <select id="selectAllByTrackId" resultType="com.dangqun.entity.FileEntity">
         select * from file_table where file_track = #{trackId}
+    </select>
+    <select id="selectOneById" resultType="com.dangqun.entity.FileEntity">
+        select * from file_table where file_id = #{id}
+    </select>
+    <select id="selectAllByIdAndTrackId" resultType="com.dangqun.entity.FileEntity">
+        select * from file_table where file_id in
+        <foreach collection="fileIds" item="fileId" index="index" open="(" close=")" separator=",">
+            #{fileId}
+        </foreach>
+        and file_track = #{trackId}
     </select>
 </mapper>

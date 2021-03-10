@@ -5,6 +5,7 @@ import com.dangqun.constant.Constants;
 import com.dangqun.entity.BranchEntity;
 import com.dangqun.entity.TrackEntity;
 import com.dangqun.service.BranchService;
+import com.dangqun.service.FileService;
 import com.dangqun.service.TrackService;
 import com.dangqun.utils.FileUtils;
 import com.dangqun.vo.AddTrackMethodBody;
@@ -30,6 +31,8 @@ public class TrackController {
     private TrackService trackService;
     @Autowired
     private BranchService branchService;
+    @Autowired
+    private FileService fileService;
 
     @PostMapping("/addTrack")
     @CheckIsManager
@@ -102,7 +105,7 @@ public class TrackController {
             }
         }
         //删除路径及其子路径中对应文件表
-
+        fileService.deleteAllByTracks(deleteSonList);
         //递归删除文件夹
         FileUtils.delDir(deleteEntity.getTrackFullPath());
         return Result.success();

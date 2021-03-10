@@ -1,0 +1,20 @@
+2021-03-05 12:40:13.402  INFO 28972 --- [main] com.dangqun.DangQunApplication           : Starting DangQunApplication on DESKTOP-R74MT52 with PID 28972 (D:\Projects\GuangZhou\github\dangqun\target\classes started by 吴铖野 in D:\Projects\GuangZhou\github\dangqun)
+2021-03-05 12:40:13.404  INFO 28972 --- [main] com.dangqun.DangQunApplication           : No active profile set, falling back to default profiles: default
+2021-03-05 12:40:14.189  INFO 28972 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-03-05 12:40:14.192  INFO 28972 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2021-03-05 12:40:14.227  INFO 28972 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 18ms. Found 0 Redis repository interfaces.
+2021-03-05 12:40:14.511  INFO 28972 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-05 12:40:14.934  INFO 28972 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2021-03-05 12:40:14.942  INFO 28972 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-03-05 12:40:14.942  INFO 28972 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.30]
+2021-03-05 12:40:15.046  INFO 28972 --- [main] o.a.c.c.C.[.[localhost].[/dangqun]       : Initializing Spring embedded WebApplicationContext
+2021-03-05 12:40:15.046  INFO 28972 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1595 ms
+2021-03-05 12:40:16.080  INFO 28972 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService
+2021-03-05 12:40:16.082  INFO 28972 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'createDownloadPath'
+2021-03-05 12:40:16.107  INFO 28972 --- [main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2021-03-05 12:40:16.587  INFO 28972 --- [main] o.s.s.c.ThreadPoolTaskScheduler          : Initializing ExecutorService 'taskScheduler'
+2021-03-05 12:40:16.636  INFO 28972 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2021-03-05 12:40:16.648  INFO 28972 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2021-03-05 12:40:16.674  INFO 28972 --- [main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2021-03-05 12:40:16.911  INFO 28972 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path '/dangqun'
+2021-03-05 12:40:16.913  INFO 28972 --- [main] com.dangqun.DangQunApplication           : Started DangQunApplication in 3.879 seconds (JVM running for 6.35)

@@ -1,11 +1,13 @@
 package com.dangqun.controller.common;
 
-import com.dangqun.annotation.FileExceptionRollBack;
 import com.dangqun.constant.Constants;
 import com.dangqun.entity.*;
 import com.dangqun.service.*;
+import com.dangqun.service.common.AsyncService;
 import com.dangqun.service.common.RedisService;
 import com.dangqun.utils.FileMd5Util;
+import com.dangqun.vo.DeleteFilesMethodBody;
+import com.dangqun.vo.GetDownloadPathMethodBody;
 import com.dangqun.vo.IdBody;
 import com.dangqun.vo.MultipartFileParam;
 import com.dangqun.vo.restful.Result;
@@ -13,16 +15,11 @@ import org.apache.commons.io.FileExistsException;
 import org.apache.commons.io.FileUtils;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.io.File;
-import java.io.IOException;
-import java.io.RandomAccessFile;
+import java.io.*;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
@@ -48,6 +45,8 @@ public class CommonController {
     private UserService userService;
     @Autowired
     private FileService fileService;
+    @Autowired
+    private AsyncService asyncService;
 
     @PostMapping("/getBranchAndTrack")
     public Result getBranchAndTrack(){
@@ -134,8 +133,41 @@ public class CommonController {
         }
     }
 
+    @PostMapping("/getDownloadPath")
+    public Result download(@RequestBody @Valid GetDownloadPathMethodBody body){
+        UserEntity userEntity = redisService.getUserData();
+        AuthEntity authEntity = authService.selectOneById(userEntity.getUserAuth());
+        TrackEntity track = trackService.selectOneById(body.getTrackId());
+        switch (authEntity.getAuthLevel()){
+            case Constants.AUTH_LEVEL_ADMIN:
+                if (track == null){
+                    return Result.failure("路径错误");
+                }
+                return doDownloadPath(body,userEntity.getUserName(),track);
+            case Constants.AUTH_LEVEL_COMMON:
+                if (track == null || track.getTrackBranch().intValue() != userEntity.getUserBranch()){
+                    return Result.failure("无权查看文件");
+                }
+                return doDownloadPath(body,userEntity.getUserName(),track);
+            case Constants.AUTH_LEVEL_SECONDARY:
+                if(track != null && track.getTrackBranch().intValue() == userEntity.getUserBranch()){
+                    return doDownloadPath(body,userEntity.getUserName(),track);
+                }
+                String branchPath = authEntity.getAuthBranchPath();
+                String[] trackIds = branchPath.split(";|,");
+                String id = body.getTrackId().toString();
+                for (String trackId : trackIds){
+                    if(trackId.equals(id)){
+                        return doDownloadPath(body,userEntity.getUserName(),track);
+                    }
+                }
+                return Result.failure("无权查看文件");
+            default:
+                return Result.failure();
+        }
+    }
+
     @PostMapping("/uploadFile")
-    @FileExceptionRollBack
     public Result uploadFile(@Valid MultipartFileParam param, MultipartFile file, HttpServletRequest request){
         boolean isMultipart = ServletFileUpload.isMultipartContent(request);
         boolean flag = false;
@@ -191,6 +223,39 @@ public class CommonController {
         return Result.failure();
     }
 
+    @PostMapping("/deleteFiles")
+    public Result deleteFiles(@RequestBody @Valid DeleteFilesMethodBody body){
+        UserEntity userEntity = redisService.getUserData();
+        AuthEntity authEntity = authService.selectOneById(userEntity.getUserAuth());
+        TrackEntity track = trackService.selectOneById(body.getTrackId());
+        switch (authEntity.getAuthLevel()){
+            case Constants.AUTH_LEVEL_ADMIN:
+                List<FileEntity> fileList = fileService.selectAllByIdAndTrackId(body.getFileIds(),body.getTrackId());
+                fileService.deleteByIdsAndTrackId(body.getFileIds(),body.getTrackId());
+                doDelete(fileList);
+                break;
+            default:
+                if(userEntity.getUserBranch().intValue() == track.getTrackBranch()){
+                    List<FileEntity> fileList1 = fileService.selectAllByIdAndTrackId(body.getFileIds(),body.getTrackId());
+                    fileService.deleteByIdsAndTrackId(body.getFileIds(),body.getTrackId());
+                    doDelete(fileList1);
+                }else {
+                    return Result.failure("无权删除");
+                }
+                break;
+        }
+        return Result.success();
+    }
+
+    private void doDelete(List<FileEntity> fileList) {
+        for (FileEntity f : fileList){
+            File file = new File(f.getFilePath());
+            if (file.exists()){
+                file.delete();
+            }
+        }
+    }
+
     private boolean doUpload(UserEntity userEntity, MultipartFileParam param, MultipartFile file, TrackEntity track) throws IOException {
         List<FileEntity> fileList = fileService.selectAllByTrackId(track.getTrackId());
         for (FileEntity f : fileList){
@@ -202,7 +267,11 @@ public class CommonController {
                                 userEntity.getUserId() + "_" +  param.getName() + "_temp";
         File tempFile = new File(tempFileName);
         //在第一次传的时候，检查文件夹下是否有同名临时文件缓存，有则删除
-        if()
+        if(param.getChunk().intValue() == 0){
+            if(tempFile.exists()){
+                tempFile.delete();
+            }
+        }
         RandomAccessFile tempRaf = new RandomAccessFile(tempFile,"rw");
         FileChannel fileChannel = tempRaf.getChannel();
         //写入分片
@@ -250,6 +319,28 @@ public class CommonController {
             return true;
         }else {
             return false;
+        }
+    }
+
+    private Result doDownloadPath(GetDownloadPathMethodBody body, String userName, TrackEntity track) {
+        List<FileEntity> fileList = fileService.selectAllByIdAndTrackId(body.getFileIds(),body.getTrackId());
+        if (fileList.size() > 0){
+            String hash = System.currentTimeMillis() + userName + body.getTrackId();
+            String parentPath = Constants.TEMP_DOWNLOAD_PATH + Constants.BRANCH_AND_FILE_PATH_SPLIT + hash;
+            File folder = new File(parentPath);
+            if(!folder.exists()){
+                folder.mkdirs();
+            }
+            if(body.getIsDownloadAll().intValue() == 0){
+                //单个下载
+                asyncService.unZipFile(fileList,parentPath,userName,track);
+            }else {
+                //打包下载
+                asyncService.zipFile(fileList,parentPath,userName,track);
+            }
+            return Result.success("正在准备下载");
+        }else {
+            return Result.failure("没有文件可供下载");
         }
     }
 

@@ -85,4 +85,8 @@ public class TrackService {
         List<String> list = Arrays.asList(ids);
         return trackMapper.selectInIds(list);
     }
+
+    public void deleteAllByBranch(Integer id) {
+        trackMapper.deleteAllByBranch(id);
+    }
 }

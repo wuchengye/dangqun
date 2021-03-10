@@ -38,6 +38,10 @@
         and track_right_value <![CDATA[ <= ]]> #{trackRightValue}
     </delete>
 
+    <delete id="deleteAllByBranch">
+        delete from inner_track_table where track_branch = #{id}
+    </delete>
+
     <select id="selectAllByBranch" resultType="com.dangqun.entity.TrackEntity">
         select * from inner_track_table where track_branch = #{trackBranch}
     </select>
